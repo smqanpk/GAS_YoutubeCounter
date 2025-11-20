@@ -1,0 +1,29 @@
+function channelsListByUsername(part, params) {
+  var response = YouTube.Channels.list(part,
+                                       params);
+  var channel = response.items[0];
+  var dataRow = [channel.statistics.subscriberCount];
+  SpreadsheetApp.getActiveSpreadsheet().appendRow(dataRow);
+}
+
+function getChannel() {
+ 
+  channelsListByUsername('statistics',
+                         {'id': 'UCU4IxmvkyulPNrdhkZCz_zw'});
+}
+
+function onOpen(){
+  var firstCell = SpreadsheetApp.getActiveSheet().getRange(1, 1).getValue();
+  if (firstCell != 'Subscriber Count') {
+    var headerRow = ["Subscriber Count"];
+    SpreadsheetApp.getActiveSpreadsheet().appendRow(headerRow);
+  }
+  getChannel();
+}
+
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var subscribers = sheet.getRange(sheet.getLastRow(), 1).getValue();
+  var params = JSON.stringify({number:subscribers});
+  return ContentService.createTextOutput(params);
+}
