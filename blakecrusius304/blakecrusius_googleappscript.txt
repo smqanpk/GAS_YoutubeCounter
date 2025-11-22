@@ -9,7 +9,7 @@ function channelsListByUsername(part, params) {
 function getChannel() {
  
   channelsListByUsername('statistics',
-                         {'id': 'UCU4IxmvkyulPNrdhkZCz_zw'});
+                         {'id': '<YOUR ID HERE'});
 }
 
 function onOpen(){
@@ -26,4 +26,5 @@ function doGet(e) {
   var subscribers = sheet.getRange(sheet.getLastRow(), 1).getValue();
   var params = JSON.stringify({number:subscribers});
   return ContentService.createTextOutput(params);
+
 }
